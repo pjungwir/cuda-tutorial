@@ -4,7 +4,9 @@
 #define N 10000000
 
 __global__ void vector_add(float *out, float *a, float *b, int n) {
-    for (int i = 0; i < n; i++) {
+    int index = threadIdx.x;
+    int stride = blockDim.x;
+    for (int i = index; i < n; i += stride) {
         out[i] = a[i] + b[i];
     }
 }
@@ -28,7 +30,7 @@ int main() {
 
     cudaMemcpy(cudaA, a, sizeof(float) * N, cudaMemcpyHostToDevice);
     cudaMemcpy(cudaB, b, sizeof(float) * N, cudaMemcpyHostToDevice);
-    vector_add<<<1,1>>>(cudaOut, cudaA, cudaB, N);
+    vector_add<<<1,256>>>(cudaOut, cudaA, cudaB, N);
     cudaMemcpy(out, cudaOut, sizeof(float) * N, cudaMemcpyDeviceToHost);
 
     int one_tenth = N / 10;
