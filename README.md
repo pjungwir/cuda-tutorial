@@ -10,3 +10,10 @@ https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/
 You will need nvcc, so do `source env.sh`.
 
 Then `make && ./hello`
+
+To get stats:
+
+```
+nsys nvprof ./vector_add2
+nsys nvprof --print-gpu-trace ./vector_add2
+```

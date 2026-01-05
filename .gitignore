@@ -1,3 +1,5 @@
 hello
 vector_add
 vector_add2
+/report*.sqlite
+*.nsys-rep
